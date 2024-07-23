@@ -20,6 +20,7 @@ model User{
   lastName String
   password String
   profile Profile?
+  course Course[]
   role Role @default(user)
   createAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -39,8 +40,27 @@ model Profile{
 }
 
 
+model Course{
+  id String @id @default(uuid())
+  title String
+  desc String? @db.Text
+  cover String?
+  duration String?
+  price String
+  mode Mode @default(online)
+  userId String
+  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum Role{
   user
   tteacher
   admin
+}
+
+enum Mode{
+  online
+  presential
 }

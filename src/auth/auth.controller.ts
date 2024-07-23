@@ -9,7 +9,8 @@ export class AuthController {
 
     @Post("login")
     login(@Body() loginDto: LoginDto){
-        return this.authService.login(loginDto)
+      console.log(loginDto)
+        return this.authService.login(loginDto) 
     }
 
     @UseGuards(RefreshJwtGuard)
