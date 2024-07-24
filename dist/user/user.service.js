@@ -50,7 +50,11 @@ let UserService = class UserService {
         return result;
     }
     findAll() {
-        return `This action returns all user`;
+        return this.database.user.findMany({
+            include: {
+                profile: true
+            }
+        });
     }
     async findOne(id) {
         const user = await this.database.user.findUnique({
@@ -74,7 +78,13 @@ let UserService = class UserService {
         });
     }
     update(id, updateUserDto) {
-        return `This action updates a #${id} user`;
+        const { firstName, lastName, phone } = updateUserDto;
+        return this.database.user.update({
+            where: {
+                id
+            },
+            data: updateUserDto
+        });
     }
     remove(id) {
         return `This action removes a #${id} user`;

@@ -13,54 +13,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id String @id @default(uuid())
-  email String @unique
-  firstName String
-  lastName String
-  password String
-  profile Profile?
-  course Course[]
-  role Role @default(user)
-  createAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+model User {
+  id         String       @id @default(uuid())
+  email      String       @unique
+  firstName  String
+  lastName   String
+  password   String
+  profile    Profile?
+  course     Course[]
+  segistered Registered[]
+  role       Role         @default(user)
+  createAt   DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
-model Profile{
-  id Int @id @default(autoincrement())
-  userId String @unique
-  phone String? @unique
-  avatar String?
-  address String?
-  bio String? @db.MediumText
+model Profile {
+  id           Int      @id @default(autoincrement())
+  userId       String   @unique
+  phone        String?  @unique
+  avatar       String?
+  address      String?
+  bio          String?  @db.MediumText
   verification String?
   isVerificate Boolean? @default(false)
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-
-model Course{
-  id String @id @default(uuid())
-  title String
-  desc String? @db.Text
-  cover String?
-  duration String?
-  price String
-  mode Mode @default(online)
-  userId String
-  user User @relation(fields: [userId],references: [id],onDelete: Cascade)
-  createAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Course {
+  id         String       @id @default(uuid())
+  title      String
+  desc       String?      @db.Text
+  cover      String?
+  duration   String?
+  price      String
+  mode       Mode         @default(online)
+  userId     String       
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  segistered Registered[]
+  videos     Video[]
+  createAt   DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
 }
 
-enum Role{
+model Video {
+  id       String @id @default(uuid())
+  title      String
+  courseId String 
+  video    String?
+  image    String?
+  slug     String @unique
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+}
+
+model Registered {
+  id              Int      @id @default(autoincrement())
+  userId          String   
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId        String   
+  course          Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  plan            Plan     @default(basic)
+  dateExpriration String
+  createAt        DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum Role {
   user
   tteacher
   admin
 }
 
-enum Mode{
+enum Mode {
   online
   presential
+}
+
+enum Plan {
+  basic
+  medium
+  premiunm
 }

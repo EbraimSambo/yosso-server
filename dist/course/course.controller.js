@@ -12,70 +12,70 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
+exports.CourseController = void 0;
 const common_1 = require("@nestjs/common");
-const user_service_1 = require("./user.service");
-const create_user_dto_1 = require("./dto/create-user.dto");
-const update_user_dto_1 = require("./dto/update-user.dto");
-let UserController = class UserController {
-    constructor(userService) {
-        this.userService = userService;
+const course_service_1 = require("./course.service");
+const create_course_dto_1 = require("./dto/create-course.dto");
+const update_course_dto_1 = require("./dto/update-course.dto");
+let CourseController = class CourseController {
+    constructor(courseService) {
+        this.courseService = courseService;
     }
-    create(createUserDto) {
-        console.log(createUserDto);
-        return this.userService.create(createUserDto);
+    create(createCourseDto, id) {
+        return this.courseService.create(createCourseDto, id);
     }
     findAll() {
-        return this.userService.findAll();
+        return this.courseService.findAll();
     }
     findOne(id) {
-        return this.userService.findOne(id);
+        return this.courseService.findOne(+id);
     }
-    update(id, updateUserDto) {
-        return this.userService.update(id, updateUserDto);
+    update(id, updateCourseDto) {
+        return this.courseService.update(+id, updateCourseDto);
     }
     remove(id) {
-        return this.userService.remove(+id);
+        return this.courseService.remove(+id);
     }
 };
-exports.UserController = UserController;
+exports.CourseController = CourseController;
 __decorate([
-    (0, common_1.Post)("register"),
+    (0, common_1.Post)(":id"),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [create_course_dto_1.CreateCourseDto, String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "create", null);
+], CourseController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "findAll", null);
+], CourseController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "findOne", null);
+], CourseController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_user_dto_1.UpdateUserDto]),
+    __metadata("design:paramtypes", [String, update_course_dto_1.UpdateCourseDto]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "update", null);
+], CourseController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "remove", null);
-exports.UserController = UserController = __decorate([
-    (0, common_1.Controller)('user'),
-    __metadata("design:paramtypes", [user_service_1.UserService])
-], UserController);
-//# sourceMappingURL=user.controller.js.map
+], CourseController.prototype, "remove", null);
+exports.CourseController = CourseController = __decorate([
+    (0, common_1.Controller)('course'),
+    __metadata("design:paramtypes", [course_service_1.CourseService])
+], CourseController);
+//# sourceMappingURL=course.controller.js.map

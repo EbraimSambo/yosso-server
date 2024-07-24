@@ -46,7 +46,11 @@ export class UserService {
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.database.user.findMany({
+      include:{
+        profile: true
+      }
+    });
   }
 
   async findOne(id: string) {
@@ -74,8 +78,14 @@ export class UserService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  update(id: string, updateUserDto: UpdateUserDto) {
+    const {firstName,lastName,phone} = updateUserDto
+    return this.database.user.update({
+      where:{
+        id
+      },
+      data: updateUserDto
+    });
   }
 
   remove(id: number) {
